@@ -1,0 +1,16 @@
+name: rt-polarity
+
+path: ../data/rt-polaritydata/
+
+source:
+  - ../data/rt-polaritydata/rt-polarity.neg
+  - ../data/rt-polaritydata/rt-polarity.pos
+
+train:
+  inputs: ../data/rt-polaritydata/train_inputs.npy
+  labels: ../data/rt-polaritydata/train_labels.npy
+
+valid:
+  inputs: ../data/rt-polaritydata/valid_inputs.npy
+  labels: ../data/rt-polaritydata/valid_labels.npy
+  size: 0.1
