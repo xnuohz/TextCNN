@@ -2,7 +2,7 @@
 
 Tensorflow implementation of "Convolutional Neural Networks for Sentence Classification"
 
-![model](asserts/model.png)
+![model](asserts/model.PNG)
 
 ## Requirements
 
@@ -25,7 +25,7 @@ python -m cnn.main --data-cnf ../config/dataset/rt-polarity.yaml --model-cnf ../
 
 ## Result
 
-![terminal](asserts/result.png)
+![terminal](asserts/result.PNG)
 
 ## Reference
 
