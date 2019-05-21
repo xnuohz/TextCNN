@@ -17,4 +17,4 @@ model:
 
 train:
   batch_size: 64
-  epoch: 20
+  epoch: 100

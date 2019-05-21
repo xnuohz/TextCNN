@@ -89,17 +89,17 @@ class TextCNN(object):
             self.input_y: valid_y,
             self.dropout_keep_prob: 1
         }
-        return sess.run([self.accuracy, self.loss], feed_dict=feed_dict)
+        return sess.run([self.accuracy, self.loss, self.merged], feed_dict=feed_dict)
 
     def train(self, sess, train_x, train_y, valid_x, valid_y, epoch=20, batch_size=128):
-        # writer = tf.summary.FileWriter(self.model_path, sess.graph)
+        writer = tf.summary.FileWriter(self.model_path, sess.graph)
         print(get_now(), 'start training')
         train_idx = sorted(range(len(train_x)), key=lambda x: len(train_x[x]), reverse=True)
         valid_idx = sorted(range(len(valid_x)), key=lambda x: len(valid_x[x]), reverse=True)
         sess.run(tf.global_variables_initializer())
         best_accuracy = 0
         epochs = trange(epoch, desc='Accuracy and Loss')
-        for _ in epochs:
+        for e_idx in epochs:
             train_loss = 0
             for i in range(0, len(train_idx), batch_size):
                 batch_idx = train_idx[i:i + batch_size]
@@ -110,9 +110,10 @@ class TextCNN(object):
             valid_loss = valid_accuracy = 0
             for j in range(0, len(valid_idx), batch_size):
                 valid_batch_idx = valid_idx[j:j + batch_size]
-                accuracy, loss = self.valid_step(sess, valid_x[valid_batch_idx], valid_y[valid_batch_idx])
+                accuracy, loss, merge_valid_res = self.valid_step(sess, valid_x[valid_batch_idx], valid_y[valid_batch_idx])
                 valid_accuracy += accuracy * batch_size
                 valid_loss += loss * batch_size
+                writer.add_summary(merge_valid_res, e_idx)
             valid_loss /= len(valid_idx)
             valid_accuracy /= len(valid_idx)
             if valid_accuracy > best_accuracy:
